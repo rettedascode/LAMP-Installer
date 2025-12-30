@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAMP Stack Installer - GitHub Pages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0f172a',
+                            surface: '#1e293b',
+                            border: '#334155',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        code {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-t-2xl p-8 md:p-12 text-center shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">🚀 LAMP Stack Installer</h1>
+            <p class="text-xl md:text-2xl text-purple-100">Automated installation script for Apache, PHP, MariaDB, and phpMyAdmin</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="bg-slate-800 rounded-b-2xl shadow-2xl overflow-hidden">
+            <div class="p-6 md:p-10">
+                <!-- Description -->
+                <div class="bg-slate-700/50 border-l-4 border-purple-500 rounded-lg p-6 mb-8">
+                    <h2 class="text-2xl font-bold text-purple-400 mb-4">About This Installer</h2>
+                    <p class="text-gray-300 mb-4">This script automates the installation of a complete LAMP stack on Debian/Ubuntu systems:</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300 ml-4">
+                        <li><strong class="text-purple-400">Apache2</strong> - Web server</li>
+                        <li><strong class="text-purple-400">PHP</strong> - Choose from versions 8.1, 8.2, or 8.3</li>
+                        <li><strong class="text-purple-400">MariaDB</strong> - Database server with basic security hardening</li>
+                        <li><strong class="text-purple-400">phpMyAdmin</strong> - Web-based database management tool</li>
+                    </ul>
+                    <p class="text-gray-300 mt-4"><strong class="text-purple-400">Features:</strong> Interactive dialog-based configuration, automatic repository setup, and secure defaults.</p>
+                </div>
+
+                <!-- One-liner Command -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-purple-400 mb-3">Quick Install (One-liner)</h3>
+                    <div class="bg-slate-900 rounded-lg border border-slate-600 overflow-hidden">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center justify-between border-b border-slate-700">
+                            <span class="text-sm font-mono text-gray-400">Installation Command</span>
+                            <button 
+                                id="copy-command-btn"
+                                onclick="copyCommand()"
+                                class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-md transition-colors duration-200 font-medium">
+                                📋 Copy
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <code id="install-command" class="text-green-400 font-mono text-sm md:text-base break-all">
+                                curl -sSL https://YOUR_USERNAME.github.io/LAMP-Installer/installer.sh | sudo bash
+                            </code>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-2 ml-1">⚠️ Always review scripts before executing. Replace YOUR_USERNAME with your GitHub username.</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <a href="installer.sh" download class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-purple-500/50">
+                        📥 Download Script
+                    </a>
+                    <button 
+                        onclick="copyScript()"
+                        class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105 shadow-lg">
+                        📋 Copy Script
+                    </button>
+                    <a href="https://github.com/yourusername/LAMP-Installer" target="_blank" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105 shadow-lg">
+                        🔗 View on GitHub
+                    </a>
+                </div>
+
+                <!-- Script Display -->
+                <div class="mt-8">
+                    <div class="bg-slate-900 rounded-lg border border-slate-600 overflow-hidden">
+                        <div class="bg-slate-800 px-4 py-3 flex items-center justify-between border-b border-slate-700">
+                            <span class="text-sm font-mono text-gray-300">📄 installer.sh</span>
+                            <button 
+                                id="copy-script-btn"
+                                onclick="copyScript()"
+                                class="px-4 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-sm rounded-md transition-colors duration-200">
+                                Copy
+                            </button>
+                        </div>
+                        <pre class="m-0 p-4 md:p-6 overflow-x-auto max-h-[600px] overflow-y-auto"><code class="language-bash" id="script-content"></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="bg-slate-900 border-t border-slate-700 px-6 md:px-10 py-6 text-center">
+                <p class="text-gray-400 mb-2">
+                    <strong class="text-purple-400">Usage:</strong> 
+                    <code class="bg-slate-800 px-2 py-1 rounded text-green-400">sudo bash installer.sh</code> on a Debian/Ubuntu system
+                </p>
+                <p class="text-gray-500 text-sm mb-2">Make sure to review the script before executing it on your system.</p>
+                <p class="text-gray-500 text-sm">Created with ❤️ for the open source community</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+        // Get current page URL to construct the command
+        const currentUrl = window.location.origin + window.location.pathname.replace('/index.html', '').replace(/\/$/, '');
+        const installCommand = `curl -sSL ${currentUrl}/installer.sh | sudo bash`;
+        
+        // Update the command display
+        document.getElementById('install-command').textContent = installCommand;
+
+        // Load and display the script
+        fetch('installer.sh')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('script-content').textContent = data;
+                Prism.highlightAll();
+            })
+            .catch(error => {
+                document.getElementById('script-content').textContent = 'Error loading script. Please download it directly.';
+                console.error('Error:', error);
+            });
+
+        // Copy command to clipboard
+        async function copyCommand() {
+            try {
+                await navigator.clipboard.writeText(installCommand);
+                const btn = document.getElementById('copy-command-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                btn.classList.add('bg-green-600', 'hover:bg-green-700');
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    btn.classList.add('bg-purple-600', 'hover:bg-purple-700');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy. Please copy manually.');
+                console.error('Copy failed:', err);
+            }
+        }
+
+        // Copy script to clipboard
+        async function copyScript() {
+            try {
+                const response = await fetch('installer.sh');
+                const text = await response.text();
+                await navigator.clipboard.writeText(text);
+                
+                // Show feedback on both buttons
+                const btn1 = document.getElementById('copy-script-btn');
+                const btn2 = event?.target;
+                
+                [btn1, btn2].forEach(btn => {
+                    if (btn && btn !== btn1) {
+                        const originalText = btn.textContent;
+                        btn.textContent = '✓ Copied!';
+                        btn.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+                        btn.classList.add('bg-green-600', 'hover:bg-green-700');
+                        
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                            btn.classList.add('bg-slate-700', 'hover:bg-slate-600');
+                        }, 2000);
+                    }
+                });
+                
+                if (btn1) {
+                    const originalText = btn1.textContent;
+                    btn1.textContent = '✓ Copied!';
+                    btn1.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+                    btn1.classList.add('bg-green-600', 'hover:bg-green-700');
+                    
+                    setTimeout(() => {
+                        btn1.textContent = originalText;
+                        btn1.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        btn1.classList.add('bg-slate-700', 'hover:bg-slate-600');
+                    }, 2000);
+                }
+            } catch (err) {
+                alert('Failed to copy. Please use the download button instead.');
+                console.error('Copy failed:', err);
+            }
+        }
+    </script>
+</body>
+</html>
